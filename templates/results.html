@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Results | AuditPro</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+  <style>
+    html {
+      height: 100%;
+      scrollbar-width: thin;
+      scrollbar-color: #888 #000;
+    }
+
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      overflow-x: hidden;
+      /* If you want the rest of the body to remain RTL, keep this.
+         If not, you can remove or comment it out: */
+      direction: rtl;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      padding: 20px 0;
+      direction: ltr; /* Ensures content within main is LTR */
+    }
+
+    main, .container, .results-container {
+      direction: ltr; /* Ensures these main sections are LTR */
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+    }
+
+    .main-header {
+      padding: 0;
+      background-color: #000000;
+      direction: ltr; /* ADDED: This ensures the header content flows LTR */
+    }
+
+    .logo-wrapper {
+      padding: 10px 0 10px 30px;
+      display: flex;
+      justify-content: flex-start; /* Will now correctly align to the left */
+      align-items: center;
+    }
+
+    .site-logo {
+      height: 50px;
+      width: auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .results-header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #f0f0f0;
+    }
+
+    .results-header h1 {
+      font-size: 2.5em;
+      color: #f0f0f0;
+      margin-bottom: 10px;
+    }
+
+    .results-header h1 span {
+      color: #007bff;
+    }
+
+    .results-header p {
+      font-size: 1.5em;
+      color: #87CEEB;
+    }
+
+    .results-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .results-table,
+    .graph-container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .results-graphs {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .graph-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .table-header,
+    .graph-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .table-header h2,
+    .graph-header h2 {
+      margin: 0;
+      color: #333;
+      font-size: 1.5em;
+    }
+
+    .table-header h2 i,
+    .graph-header h2 i {
+      margin-right: 10px;
+      color: #007bff;
+    }
+
+    .export-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .export-btn:hover {
+      background-color: #218838;
+    }
+
+    .export-btn i {
+      margin-right: 5px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .graph-img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 50px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .back-btn,
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 25px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-btn:hover,
+    .home-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .back-btn i,
+    .home-btn i {
+      margin-right: 10px;
+    }
+
+    .main-footer {
+      background-color: #000000;
+      color: #ffffff;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .footer-text {
+      font-size: 0.9em;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+
+  <div class='light x1'></div>
+  <div class='light x2'></div>
+  <div class='light x3'></div>
+  <div class='light x4'></div>
+  <div class='light x5'></div>
+  <div class='light x6'></div>
+  <div class='light x7'></div>
+  <div class='light x8'></div>
+  <div class='light x9'></div>
+  <div class="animated-bg"></div>
+
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <header class="main-header">
+    <div class="logo-wrapper">
+      <img src="{{ url_for('static', filename='images/3.png') }}" alt="Logo" class="site-logo">
+    </div>
+  </header>
+
+  <div class="wrapper">
+
+    <main class="main-content results-page">
+      <div class="container">
+        <div class="results-header animate-fade-in">
+          <h1>Audit <span>Results</span></h1>
+          <p>Detailed analysis of your selected audit type</p>
+        </div>
+
+        <div class="results-container">
+          <div class="results-table animate-slide-up">
+            <div class="table-header">
+              <h2><i class="fas fa-table"></i> Audit Data</h2>
+              <button class="export-btn">
+                <i class="fas fa-download"></i> Export
+              </button>
+            </div>
+            <div class="table-responsive">
+              {% for table in tables %}
+                {{ table|safe }}
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="results-graphs">
+            <div class="graph-container animate-slide-up">
+              <div class="graph-header">
+                <h2><i class="fas fa-chart-bar"></i> Frequency vs AuditScore</h2>
+              </div>
+              <img src="{{ audit_score_img }}" alt="Frequency vs AuditScore" class="graph-img">
+            </div>
+
+            <div class="graph-container animate-slide-up">
+              <div class="graph-header">
+                <h2><i class="fas fa-chart-line"></i> DataValue Comparison</h2>
+              </div>
+              <img src="{{ data_value_img }}" alt="DataValue Comparison" class="graph-img">
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons animate-fade-in">
+          <a href="/dashboard" class="back-btn">
+            <i class="fas fa-magnifying-glass"></i> Check Another Audit Type
+          </a>
+          <a href="/" class="home-btn">
+            <i class="fas fa-home"></i> Home
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="main-footer">
+      <div class="container">
+        <p class="footer-text">Powered By Aravind Suresh</p>
+      </div>
+    </footer>
+
+  </div> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('table').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+      });
+
+      $('.export-btn').on('click', function () {
+        $('table').DataTable().button('.buttons-csv').trigger();
+      });
+    });
+  </script>
+</body>
+</html>

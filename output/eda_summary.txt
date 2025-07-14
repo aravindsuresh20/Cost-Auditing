@@ -1,0 +1,85 @@
+Summary Statistics:
+           AuditID    DataValue     Timestamp   AuditScore     Variance     Duration    ErrorRate  CompletionPercentage     AuditCost  ReviewCount   RiskFactor  PaymentProcessingSecurity  PCIDSSComplianceLevel
+count  1000.000000  1000.000000  1.000000e+03  1000.000000  1000.000000  1000.000000  1000.000000           1000.000000   1000.000000  1000.000000  1000.000000                1000.000000            1000.000000
+mean    500.500000  4986.453770  1.730071e+09    64.850000    14.456410     6.438000    10.020870             65.029000   9962.815640     3.022000    52.107000                  80.670000              75.385000
+std     288.819436  2909.220253  8.988341e+06    13.057488     8.851549     3.442384     5.792204             19.784833   5622.355251     1.424621    29.216488                  11.501974              14.809527
+min       1.000000   111.570000  1.714115e+09    25.000000     0.010000     1.000000     0.000000             30.000000    536.300000     1.000000     0.000000                  60.000000              50.000000
+25%     250.750000  2428.467500  1.722560e+09    55.000000     6.507500     3.000000     4.890000             48.000000   4899.002500     2.000000    27.750000                  71.000000              63.000000
+50%     500.500000  4922.470000  1.729796e+09    65.000000    14.300000     6.000000    10.185000             66.000000   9986.335000     3.000000    53.000000                  81.000000              75.000000
+75%     750.250000  7554.640000  1.737961e+09    75.000000    21.850000     9.000000    15.060000             82.000000  14693.547500     4.000000    77.000000                  91.000000              88.250000
+max    1000.000000  9990.470000  1.745651e+09   105.000000    29.970000    12.000000    19.970000            100.000000  19995.170000     5.000000   100.000000                 100.000000             100.000000
+
+Missing Values:
+AuditID                      0
+AuditType                    0
+DataValue                    0
+Timestamp                    0
+AuditScore                   0
+Variance                     0
+Duration                     0
+RiskLevel                    0
+AuditStatus                  0
+ErrorRate                    0
+CompletionPercentage         0
+AuditCost                    0
+ReviewCount                  0
+RiskFactor                   0
+PaymentProcessingSecurity    0
+PCIDSSComplianceLevel        0
+EncryptionStandard           0
+TokenizationUsed             0
+PaymentGatewaySecurity       0
+WebsiteSecurity              0
+VulnerabilityTesting         0
+WAFInPlace                   0
+AccessControls               0
+MalwareScanning              0
+PatchManagement              0
+PasswordPolicies             0
+AccountTakeoverPrevention    0
+SessionManagement            0
+StockoutsRisk                0
+OverstockingRisk             0
+InventoryDataAccuracy        0
+OrderAccuracy                0
+ShippingIssues               0
+ShippingCostAccuracy         0
+ReturnsRefundsProcess        0
+
+Data Types:
+AuditID                        int64
+AuditType                     object
+DataValue                    float64
+Timestamp                      int64
+AuditScore                     int64
+Variance                     float64
+Duration                       int64
+RiskLevel                     object
+AuditStatus                   object
+ErrorRate                    float64
+CompletionPercentage           int64
+AuditCost                    float64
+ReviewCount                    int64
+RiskFactor                     int64
+PaymentProcessingSecurity      int64
+PCIDSSComplianceLevel          int64
+EncryptionStandard            object
+TokenizationUsed              object
+PaymentGatewaySecurity        object
+WebsiteSecurity               object
+VulnerabilityTesting          object
+WAFInPlace                    object
+AccessControls                object
+MalwareScanning               object
+PatchManagement               object
+PasswordPolicies              object
+AccountTakeoverPrevention     object
+SessionManagement             object
+StockoutsRisk                 object
+OverstockingRisk              object
+InventoryDataAccuracy         object
+OrderAccuracy                 object
+ShippingIssues                object
+ShippingCostAccuracy          object
+ReturnsRefundsProcess         object
+

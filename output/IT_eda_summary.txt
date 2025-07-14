@@ -1,0 +1,23 @@
+Summary Statistics:
+       AuditScore    DataValue
+count  186.000000   186.000000
+mean    56.747312  4507.086989
+std     10.782148  2922.498631
+min     25.000000   184.280000
+25%     50.000000  1683.775000
+50%     55.000000  4421.985000
+75%     65.000000  6931.180000
+max     80.000000  9933.700000
+
+Missing Values:
+AuditType     0
+AuditScore    0
+DataValue     0
+RiskLevel     0
+
+Data Types:
+AuditType      object
+AuditScore      int64
+DataValue     float64
+RiskLevel      object
+
